@@ -14,6 +14,13 @@ router.get("/get/all/todos/:user_email", async (req, res) => {
   res.json({ todos });
 });
 
+router.post("/complete/:id", async (req, res) => {
+  const todo = await todoModel.findOne({ _id: req.params.id });
+  todo.status = "completed";
+  await todo.save();
+  res.json({success: true})
+});
+
 router.post("/create/todo/:email", CreateTodo);
 
 export default router;

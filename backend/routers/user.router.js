@@ -8,10 +8,11 @@ import LoginUser from "../controllers/Login.control.js";
 
 router.get("/get/:email", async (req, res) => {
     try {
-        const user = await userModel.findOne({ email: req.params.email });
-        res.json({user})
+        const user = await userModel.findOne({ email: req.params.email }).populate("todo_list");
+        res.json({user , success: true})
     } catch (err) {
         console.log(err.message);
+        res.json({success: false , message: "Error"})
     }
 });
 
