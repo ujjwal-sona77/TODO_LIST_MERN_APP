@@ -11,10 +11,8 @@ const App = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<SignUp />} />
-      <Route element={<ProtectedRoute />}>
         <Route path="/home" element={<Home />} />
         <Route path="/newtodo" element={<NewTodo />} />
-      </Route>
     </Routes>
   );
 };
