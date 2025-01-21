@@ -46,7 +46,7 @@ const Home = () => {
     const userEmail = getEmailFromToken();
     if (userEmail) {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URI}/user/get/${userEmail}`
+        `${import.meta.env.VITE_BASE_URI}/user/get/${userEmail}` , {withCredentials: true}
       );
       if (response.data.success) {
         setTodos(response.data.user.todo_list);
