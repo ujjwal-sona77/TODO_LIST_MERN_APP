@@ -10,8 +10,9 @@ export default async function CreateTodo(req, res) {
       priority,
       dueDate,
       user: user,
+      status: "pending"
     });
-    res.json({ success: true, message: "Created Succesfully" });
+    res.json({ success: true, message: "Created Successfully" });
 
     user.todo_list.push(newTodo);
     await user.save(); // Save the updated user document

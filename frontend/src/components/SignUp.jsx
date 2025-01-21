@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
-
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios.post(
@@ -17,7 +16,7 @@ const SignUp = () => {
       { withCredentials: true }
     );
     if (response.data.success) {
-      navigate("/home")
+      navigate("/home");
     } else {
       setError(response.data.message);
     }
@@ -64,6 +63,12 @@ const SignUp = () => {
           >
             Sign Up
           </button>
+          <div className="alerdy flex justify-center gap-2 items-center p-2">
+            <p>Alerdy had an account ?</p>
+            <Link to="/login" className="text-blue-500 hover:text-blue-700">
+              Login
+            </Link>
+          </div>
         </form>
       </div>
     </div>

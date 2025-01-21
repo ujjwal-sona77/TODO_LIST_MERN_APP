@@ -21,6 +21,13 @@ router.post("/complete/:id", async (req, res) => {
   res.json({success: true})
 });
 
+router.post("/pending/:id", async (req, res) => {
+  const todo = await todoModel.findOne({ _id: req.params.id });
+  todo.status = "pending";
+  await todo.save();
+  res.json({success: true})
+});
+
 router.post("/create/todo/:email", CreateTodo);
 
 export default router;
