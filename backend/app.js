@@ -7,10 +7,6 @@ import userRouter from "./routers/user.router.js";
 const app = express();
 app.use(morgan("dev"));
 app.use(cookieParser());
-app.use(cors({
-    credentials: true,
-    origin: "https://todo-list-phi-eight-89.vercel.app"
-}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
