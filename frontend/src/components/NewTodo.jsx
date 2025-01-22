@@ -75,6 +75,26 @@ const NewTodo = () => {
     <>
       <main>
         <div className="center flex flex-col justify-center items-center h-screen">
+            <nav className="fixed top-0 w-full bg-gray-800 text-white p-4 flex justify-between items-center">
+                <div className="text-xl font-bold">Welcome, {user.username || 'User'}</div>
+                <div className="flex gap-4">
+                    <button 
+                        onClick={() => navigate('/home')} 
+                        className="hover:text-blue-300"
+                    >
+                        Home
+                    </button>
+                    <button 
+                        onClick={() => {
+                            localStorage.removeItem('token');
+                            navigate('/login');
+                        }} 
+                        className="hover:text-red-300"
+                    >
+                        Logout
+                    </button>
+                </div>
+            </nav>
           <h1 className="text-3xl font-bold mb-6">
             Create a New <span className="text-blue-500">TODO</span>
           </h1>

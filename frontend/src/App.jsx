@@ -5,6 +5,7 @@ import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import NewTodo from "./components/NewTodo";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./components/Profile";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
     <Route element={<ProtectedRoute />} >
       <Route path="/home" element={<Home />} />
       <Route path="/newtodo" element={<NewTodo />} />
+      <Route path="/profile" element={<Profile />} />
     </Route>
     </Routes>
   );
