@@ -6,23 +6,20 @@ const Home = () => {
   const [todos, setTodos] = useState([]);
   const [user, setUser] = useState({});
 
-  const getEmailFromToken = () => {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token="))
-      ?.split("=")[1];
+const getEmailFromToken = () => {
+    const token = localStorage.getItem('token');
 
     if (token) {
-      try {
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        return payload.email;
-      } catch (error) {
-        console.error("Error decoding token:", error);
-        return null;
-      }
+        try {
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            return payload.email;
+        } catch (error) {
+            console.error("Error decoding token:", error);
+            return null;
+        }
     }
     return null;
-  };
+};
 
   useEffect(() => {
     const getUser = async () => {

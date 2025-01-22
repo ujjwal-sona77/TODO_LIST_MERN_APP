@@ -17,9 +17,14 @@ const SignUp = () => {
     );
     if (response.data.success) {
       navigate("/home");
+      localStorage.setItem("token", response.data.token);
     } else {
       setError(response.data.message);
     }
+
+    setEmail("");
+    setPassword("");
+    setUsername("");
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">

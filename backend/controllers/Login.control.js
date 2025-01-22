@@ -18,8 +18,7 @@ export default async function LoginUser(req, res) {
             process.env.JWT_SECRET,
             { expiresIn: "24h" }
           );
-          res.cookie("token", token);
-          res.status(200).json({ message: "Login successful", success: true });
+          res.status(200).json({ message: "Login successful", success: true  , token});
         } else {
           return res.send({
             message: "Invalid username or password",

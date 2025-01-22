@@ -17,8 +17,7 @@ export default async function CreateUser(req, res) {
               username,
             });
             const token = jwt.sign({id: user._id , email: user.email} , process.env.JWT_SECRET , {expiresIn: "24h"} )
-            res.cookie("token" , token  , {httpOnly: true , secure: true , sameSite: "none"})
-            res.json({success: true , message: "User Created Succesfull" , user})
+            res.json({success: true , message: "User Created Succesfull" , user , token})
           });
         });
     } catch (error) {

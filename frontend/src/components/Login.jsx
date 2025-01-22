@@ -12,12 +12,14 @@ const Login = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URI}/user/login`,
         { email, password },
-        { withCredentials: true }
+        { withCredentials: true },
+        {credential: "include"}
       );
 
       if (!response.data.success) {
         setError(response.data.message);
       } else {
+        localStorage.setItem("token", response.data.token);
         navigate("/home");
       }
     } catch (err) {

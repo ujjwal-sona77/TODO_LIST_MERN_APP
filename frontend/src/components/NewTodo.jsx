@@ -11,10 +11,7 @@ const NewTodo = () => {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   const getEmailFromToken = () => {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token="))
-      ?.split("=")[1];
+    const token = localStorage.getItem("token");
 
     if (token) {
       try {
@@ -68,11 +65,11 @@ const NewTodo = () => {
       setMessage(res.data.message);
     }
 
-    setTitle("");   
+    setTitle("");
     setDescription("");
     setPriority("");
     setDueDate("");
-  };    
+  };
 
   return (
     <>
