@@ -7,7 +7,7 @@ connectDB();
 const server = http.createServer(app);
 
 server.listen(process.env.PORT, () => {
-    console.log(`Server Started Correctly on Port ${process.env.PORT}`);
+    console.log(`Server Started Correctly`);
 });
 
 export default server;
