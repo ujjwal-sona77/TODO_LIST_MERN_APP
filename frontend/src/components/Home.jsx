@@ -76,7 +76,7 @@ return (
                 <h1 className="text-xl font-bold">Todo App</h1>
                 <div className="flex items-center space-x-4">
                     <Link 
-                        to="/create-todo"
+                        to="/newtodo"
                         className="text-blue-500 hover:text-blue-700"
                     >
                         New Todo
