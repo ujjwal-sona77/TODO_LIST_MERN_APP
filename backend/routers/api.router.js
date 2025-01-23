@@ -18,16 +18,21 @@ router.post("/complete/:id", async (req, res) => {
   const todo = await todoModel.findOne({ _id: req.params.id });
   todo.status = "completed";
   await todo.save();
-  res.json({success: true})
+  res.json({ success: true });
 });
 
 router.post("/pending/:id", async (req, res) => {
   const todo = await todoModel.findOne({ _id: req.params.id });
   todo.status = "pending";
   await todo.save();
-  res.json({success: true})
+  res.json({ success: true });
 });
 
 router.post("/create/todo/:email", CreateTodo);
+
+router.get("/delete/todo/:id", async (req, res) => {
+  await todoModel.deleteOne({ _id: req.params.id });
+  res.json({ success: true });
+});
 
 export default router;

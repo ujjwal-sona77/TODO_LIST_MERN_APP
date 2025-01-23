@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { spiral } from "ldrs";
+
+spiral.register();
 
 const Profile = () => {
-  const [user, setUser] = useState({});
-
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
   const getEmailFromToken = () => {
     const token = localStorage.getItem("token");
 
@@ -37,36 +40,42 @@ const Profile = () => {
 
     getUser();
   }, []);
-
+  if (!user) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <l-spiral size="40" speed="0.9" color="black"></l-spiral>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
-        <nav className="bg-white shadow-lg mb-8 rounded-lg max-w-3xl mx-auto">
-            <div className="px-6 py-4 flex justify-between items-center">
-                <div className="flex space-x-4">
-                    <a
-                        href="/home"
-                        className="text-blue-600 hover:text-blue-800 font-medium"
-                    >
-                        Home
-                    </a>
-                    <a
-                        href="/newtodo"
-                        className="text-blue-600 hover:text-blue-800 font-medium"
-                    >
-                        New Todo
-                    </a>
-                </div>
-                <button
-                    onClick={() => {
-                        localStorage.removeItem("token");
-                        window.location.href = "/login";
-                    }}
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-                >
-                    Logout
-                </button>
-            </div>
-        </nav>
+      <nav className="bg-white shadow-lg mb-8 rounded-lg max-w-3xl mx-auto">
+        <div className="px-6 py-4 flex justify-between items-center">
+          <div className="flex space-x-4">
+            <a
+              href="/home"
+              className="text-blue-600 hover:text-blue-800 font-medium"
+            >
+              Home
+            </a>
+            <a
+              href="/newtodo"
+              className="text-blue-600 hover:text-blue-800 font-medium"
+            >
+              New Todo
+            </a>
+          </div>
+          <button
+            onClick={() => {
+              localStorage.removeItem("token");
+              window.location.href = "/login";
+            }}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+          >
+            Logout
+          </button>
+        </div>
+      </nav>
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="px-8 pt-8 pb-6 bg-gradient-to-r from-blue-600 to-indigo-600">
@@ -201,7 +210,22 @@ const Profile = () => {
                             />
                           </svg>
                         </button>
-                        <button className="text-red-500 hover:text-red-700">
+                        <button
+                          onClick={async () => {
+                            const res = await axios.get(
+                              `${
+                                import.meta.env.VITE_BASE_URI
+                              }/api/delete/todo/${todo._id}`
+                            );
+                            if (res.data.success) {
+                              const updatedTodos = user.todo_list.filter(
+                                (t) => t._id !== todo._id
+                              );
+                              setUser({ ...user, todo_list: updatedTodos });
+                            }
+                          }}
+                          className="text-red-500 hover:text-red-700"
+                        >
                           <svg
                             className="w-5 h-5"
                             fill="none"

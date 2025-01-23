@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { spiral } from "ldrs";
+
+spiral.register();
 
 const NewTodo = () => {
   const [title, setTitle] = useState("");
@@ -8,7 +11,7 @@ const NewTodo = () => {
   const [priority, setPriority] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [message, setMessage] = useState("");
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const getEmailFromToken = () => {
     const token = localStorage.getItem("token");
@@ -71,124 +74,144 @@ const NewTodo = () => {
     setDueDate("");
   };
 
+  if (!user) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <l-spiral size="40" speed="0.9" color="black"></l-spiral>
+      </div>
+    );
+  }
+
 return (
     <>
-        <main>
-            <div className="center flex flex-col justify-center items-center min-h-screen p-4">
-                    <nav className="fixed top-0 w-full bg-gray-800 text-white p-4 flex flex-wrap justify-between items-center">
-                            <div className="text-xl font-bold truncate max-w-[200px] sm:max-w-none">Welcome, {user.username || 'User'}</div>
-                            <div className="flex gap-4">
-                                    <button 
-                                            onClick={() => navigate('/home')} 
-                                            className="hover:text-blue-300"
-                                    >
-                                            Home
-                                    </button>
-                                    <button 
-                                            onClick={() => {
-                                                    localStorage.removeItem('token');
-                                                    navigate('/login');
-                                            }} 
-                                            className="hover:text-red-300"
-                                    >
-                                            Logout
-                                    </button>
-                            </div>
-                    </nav>
-                <h1 className="text-2xl sm:text-3xl font-bold mb-6 mt-20 text-center">
-                    Create a New <span className="text-blue-500">TODO</span>
-                </h1>
-                <form
-                    onSubmit={handleSubmit}
-                    method="post"
-                    className="new-todo-form p-4 sm:p-8 bg-[#dadada] w-full max-w-[30rem] flex flex-col gap-4 sm:gap-6 rounded-lg shadow-lg mx-4"
-                >
-                    {message && (
-                        <div
-                            className={`p-4 rounded-lg ${
-                                message.includes("Successfully")
-                                    ? "bg-green-200 text-green-800"
-                                    : "bg-red-200 text-red-800"
-                            }`}
-                        >
-                            {message}
-                        </div>
-                    )}
-                    <div className="flex flex-col gap-2">
-                        <label className="font-semibold text-lg sm:text-xl" htmlFor="title">
-                            Title
-                        </label>
-                        <input
-                            type="text"
-                            id="title"
-                            value={title}
-                            name="title"
-                            onChange={(e) => setTitle(e.target.value)}
-                            className="rounded-lg text-base sm:text-lg p-2 w-full"
-                            placeholder="Enter the title for your Todo"
-                        />
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="description" className="font-semibold text-lg sm:text-xl">
-                            Description
-                        </label>
-                        <input
-                            type="text"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            name="description"
-                            id="description"
-                            className="rounded-lg text-base sm:text-lg p-2 w-full"
-                            placeholder="Enter the description"
-                        />
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="priority" className="font-semibold text-lg sm:text-xl">
-                            Priority
-                        </label>
-                        <select
-                            id="priority"
-                            name="priority"
-                            value={priority}
-                            onChange={(e) => setPriority(e.target.value)}
-                            className="rounded-lg text-base sm:text-lg p-2 w-full"
-                        >
-                            <option value="" disabled selected>
-                                Select priority
-                            </option>
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                        </select>
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="dueDate" className="font-semibold text-lg sm:text-xl">
-                            Due Date
-                        </label>
-                        <input
-                            name="dueDate"
-                            value={dueDate}
-                            onChange={(e) => setDueDate(e.target.value)}
-                            type="date"
-                            id="dueDate"
-                            className="rounded-lg text-base sm:text-lg p-2 w-full"
-                        />
-                    </div>
-
-                    <button
-                        type="submit"
-                        className="bg-blue-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-base sm:text-lg font-semibold hover:bg-blue-600 transition-colors mt-4"
-                    >
-                        Create Todo
-                    </button>
-                </form>
+      <main className="min-h-screen bg-gray-50">
+        <div className="center flex flex-col justify-center items-center min-h-screen p-4">
+          {/* Responsive Navigation */}
+          <nav className="fixed top-0 w-full bg-gray-800 text-white p-4 flex flex-wrap justify-between items-center z-10">
+            <div className="text-base sm:text-xl font-bold truncate max-w-[150px] md:max-w-none">
+              Welcome, {user.username || "User"}
             </div>
-        </main>
+            <div className="flex gap-2 sm:gap-4">
+              <button
+                onClick={() => navigate("/home")}
+                className="px-3 py-1 sm:px-4 sm:py-2 text-sm sm:text-base hover:bg-blue-600 rounded-lg transition-colors"
+              >
+                Home
+              </button>
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/login");
+                }}
+                className="px-3 py-1 sm:px-4 sm:py-2 text-sm sm:text-base hover:bg-red-600 rounded-lg transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          </nav>
+
+          {/* Form Container */}
+          <div className="w-full max-w-4xl px-4 mt-24 mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center">
+              Create a New <span className="text-blue-500">TODO</span>
+            </h1>
+            
+            <form
+              onSubmit={handleSubmit}
+              method="post"
+              className="new-todo-form p-6 md:p-8 bg-white w-full max-w-[35rem] mx-auto flex flex-col gap-5 rounded-xl shadow-lg"
+            >
+              {message && (
+                <div
+                  className={`p-4 rounded-lg text-sm sm:text-base ${
+                    message.includes("Successfully")
+                      ? "bg-green-100 text-green-800"
+                      : "bg-red-100 text-red-800"
+                  }`}
+                >
+                  {message}
+                </div>
+              )}
+
+              {/* Form Fields */}
+              <div className="space-y-4">
+                <div className="flex flex-col gap-2">
+                  <label className="font-medium text-gray-700" htmlFor="title">
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    id="title"
+                    value={title}
+                    name="title"
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="rounded-lg border-gray-300 border p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="Enter the title for your Todo"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label className="font-medium text-gray-700" htmlFor="description">
+                    Description
+                  </label>
+                  <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    name="description"
+                    id="description"
+                    rows="3"
+                    className="rounded-lg border-gray-300 border p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="Enter the description"
+                  />
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex-1">
+                    <label className="font-medium text-gray-700" htmlFor="priority">
+                      Priority
+                    </label>
+                    <select
+                      id="priority"
+                      name="priority"
+                      value={priority}
+                      onChange={(e) => setPriority(e.target.value)}
+                      className="mt-1 w-full rounded-lg border-gray-300 border p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="" disabled>Select priority</option>
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </div>
+
+                  <div className="flex-1">
+                    <label className="font-medium text-gray-700" htmlFor="dueDate">
+                      Due Date
+                    </label>
+                    <input
+                      name="dueDate"
+                      value={dueDate}
+                      onChange={(e) => setDueDate(e.target.value)}
+                      type="date"
+                      id="dueDate"
+                      className="mt-1 w-full rounded-lg border-gray-300 border p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="mt-6 w-full bg-blue-500 text-white px-6 py-3 rounded-lg text-base font-semibold hover:bg-blue-600 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus:ring-4 focus:ring-blue-200"
+              >
+                Create Todo
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
     </>
-);
+  );
 };
 
 export default NewTodo;
