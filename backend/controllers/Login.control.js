@@ -16,7 +16,7 @@ export default async function LoginUser(req, res) {
           let token = jwt.sign(
             { email, id: user._id },
             process.env.JWT_SECRET,
-            { expiresIn: "24h" }
+            { expiresIn: "7d" }
           );
           res.status(200).json({ message: "Login successful", success: true  , token});
         } else {
