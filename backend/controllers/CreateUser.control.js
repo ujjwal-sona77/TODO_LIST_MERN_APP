@@ -16,7 +16,7 @@ export default async function CreateUser(req, res) {
               password: hash,
               username,
             });
-            const token = jwt.sign({id: user._id , email: user.email} , process.env.JWT_SECRET , {expiresIn: "24h"} )
+            const token = jwt.sign({id: user._id , email: user.email} , process.env.JWT_SECRET , {expiresIn: "7d"} )
             res.json({success: true , message: "User Created Succesfull" , user , token})
           });
         });
