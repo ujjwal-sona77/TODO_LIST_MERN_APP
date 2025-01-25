@@ -9,7 +9,7 @@ export default async function CreateUser(req, res) {
           bcrypt.hash(password, salt, async (err, hash) => {
             const existingUser = await userModel.findOne({ email: email });
             if (existingUser) {
-              return res.send({ message: "User already exists" });
+              return res.send({success: false  , message: "User already exists" });
             }
             const user = await userModel.create({
               email,
