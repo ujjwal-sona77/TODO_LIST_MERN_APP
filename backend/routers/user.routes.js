@@ -3,8 +3,8 @@ const router = Router();
 import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import CreateUser from "../controllers/CreateUser.control.js";
-import LoginUser from "../controllers/Login.control.js";
+import CreateUser from "../controllers/CreateUser.controller.js";
+import LoginUser from "../controllers/Login.controller.js";
 
 router.get("/get/:email", async (req, res) => {
     try {

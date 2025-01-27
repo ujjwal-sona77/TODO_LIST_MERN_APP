@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema({
             ref: "Todo",
         },
     ],
+    verficationCode: {
+        type: Number
+    }
 });
 
 const User = mongoose.model("User", userSchema);

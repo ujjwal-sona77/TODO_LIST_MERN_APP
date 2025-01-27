@@ -195,7 +195,23 @@ const Profile = () => {
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <button className="text-blue-500 hover:text-blue-700">
+                        <button onClick={async ()=> {
+                            const res = await axios.get(
+                              `${import.meta.env.VITE_BASE_URI}/api/${todo.status === "complete" ? "pending" : "complete"}/todo/${todo._id}`
+                            );
+                            if (res.data.success) {
+                                const updatedTodos = user.todo_list.map((t) => {
+                                    if (t._id === todo._id) {
+                                        return {
+                                            ...t,
+                                            status: todo.status === "completed" ? "pending" : "completed"
+                                        };
+                                    }
+                                    return t;
+                                });
+                                setUser({ ...user, todo_list: updatedTodos });
+                            }
+                        }} className="text-blue-500 hover:text-blue-700">
                           <svg
                             className="w-5 h-5"
                             fill="none"
