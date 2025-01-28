@@ -12,6 +12,7 @@ const NewTodo = () => {
   const [dueDate, setDueDate] = useState("");
   const [message, setMessage] = useState("");
   const [user, setUser] = useState(null);
+  const [dueTime, setDueTime] = useState("");
   const navigate = useNavigate();
   const getEmailFromToken = () => {
     const token = localStorage.getItem("token");
@@ -54,6 +55,7 @@ const NewTodo = () => {
         description,
         priority,
         dueDate,
+        dueTime,
       },
       { withCredentials: true }
     );
@@ -82,11 +84,11 @@ const NewTodo = () => {
     );
   }
 
-return (
+  return (
     <>
       <main className="min-h-screen bg-gray-50">
         <div className="center flex flex-col justify-center items-center min-h-screen p-4">
-          {/* Responsive Navigation */}
+          {/* Navigation section remains the same */}
           <nav className="fixed top-0 w-full bg-gray-800 text-white p-4 flex flex-wrap justify-between items-center z-10">
             <div className="text-base sm:text-xl font-bold truncate max-w-[150px] md:max-w-none">
               Welcome, {user.username || "User"}
@@ -115,7 +117,7 @@ return (
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center">
               Create a New <span className="text-blue-500">TODO</span>
             </h1>
-            
+
             <form
               onSubmit={handleSubmit}
               method="post"
@@ -151,7 +153,10 @@ return (
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="font-medium text-gray-700" htmlFor="description">
+                  <label
+                    className="font-medium text-gray-700"
+                    htmlFor="description"
+                  >
                     Description
                   </label>
                   <textarea
@@ -167,7 +172,10 @@ return (
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex-1">
-                    <label className="font-medium text-gray-700" htmlFor="priority">
+                    <label
+                      className="font-medium text-gray-700"
+                      htmlFor="priority"
+                    >
                       Priority
                     </label>
                     <select
@@ -177,25 +185,48 @@ return (
                       onChange={(e) => setPriority(e.target.value)}
                       className="mt-1 w-full rounded-lg border-gray-300 border p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
-                      <option value="" disabled>Select priority</option>
+                      <option value="" disabled>
+                        Select priority
+                      </option>
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
                       <option value="high">High</option>
                     </select>
                   </div>
 
-                  <div className="flex-1">
-                    <label className="font-medium text-gray-700" htmlFor="dueDate">
-                      Due Date
-                    </label>
-                    <input
-                      name="dueDate"
-                      value={dueDate}
-                      onChange={(e) => setDueDate(e.target.value)}
-                      type="date"
-                      id="dueDate"
-                      className="mt-1 w-full rounded-lg border-gray-300 border p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                  <div className="flex-1 space-y-4">
+                    <div>
+                      <label
+                        className="font-medium text-gray-700"
+                        htmlFor="dueDate"
+                      >
+                        Due Date
+                      </label>
+                      <input
+                        name="dueDate"
+                        value={dueDate}
+                        onChange={(e) => setDueDate(e.target.value)}
+                        type="date"
+                        id="dueDate"
+                        className="mt-1 w-full rounded-lg border-gray-300 border p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        className="font-medium text-gray-700"
+                        htmlFor="dueTime"
+                      >
+                        Due Time
+                      </label>
+                      <input
+                        name="dueTime"
+                        type="time"
+                        id="dueTime"
+                        value={dueTime}
+                        onChange={(e) => setDueTime(e.target.value)}
+                        className="mt-1 w-full rounded-lg border-gray-300 border p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

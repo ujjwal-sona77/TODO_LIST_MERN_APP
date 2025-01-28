@@ -34,7 +34,6 @@ const Profile = () => {
 
       if (response.data.success) {
         setUser(response.data.user);
-        setTodos(response.data.user.todo_list);
       }
     };
 

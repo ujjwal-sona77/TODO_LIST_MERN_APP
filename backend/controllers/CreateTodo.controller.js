@@ -1,7 +1,7 @@
 import userModel from "../models/user.model.js";
 import todoModel from "../models/todo.model.js";
 export default async function CreateTodo(req, res) {
-  let { title, description, priority, dueDate } = req.body;
+  let { title, description, priority, dueDate , dueTime} = req.body;
   try {
     const user = await userModel.findOne({ email: req.params.email });
     const newTodo = await todoModel.create({
@@ -10,7 +10,8 @@ export default async function CreateTodo(req, res) {
       priority,
       dueDate,
       user: user,
-      status: "pending"
+      status: "pending",
+      dueTime
     });
     res.json({ success: true, message: "Created Successfully" });
 
