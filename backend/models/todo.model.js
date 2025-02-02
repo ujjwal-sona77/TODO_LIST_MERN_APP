@@ -22,8 +22,6 @@ const todoSchema = new mongoose.Schema({
     },
     dueDate: {
         type: Date,
-        default: Date.now,
-        timestamps: true
     },
     dueTime: {
         type: String,  // Changed to Date type
