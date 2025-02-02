@@ -162,8 +162,10 @@ const Home = () => {
               });
               const dueTime = todo.dueTime;
 
-              const isDelayed =
-                currentTime > dueTime && todo.status !== "completed";
+              const dueDateObj = new Date(todo.dueDate);
+              const dueDateTime = new Date(`${todo.dueDate}T${todo.dueTime}`);
+              const isDelayed = 
+                currentDateTime > dueDateTime && todo.status !== "completed";
               const todoStatus = isDelayed ? "delayed" : todo.status;
 
               return (
