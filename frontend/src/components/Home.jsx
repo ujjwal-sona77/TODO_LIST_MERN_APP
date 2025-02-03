@@ -51,13 +51,6 @@ const Home = () => {
       );
       if (response.data.success) {
         const updatedTodos = response.data.user.todo_list.map((todo) => {
-          const currentDateTime = new Date();
-          const dueDateTime = new Date(`${todo.dueDate}T${todo.dueTime}`);
-          if (currentDateTime > dueDateTime && todo.status === "pending") {
-            todo.status = "delayed";
-          }
-          return todo;
-        });
         setTodos(updatedTodos);
       }
     }
