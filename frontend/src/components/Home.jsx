@@ -50,7 +50,16 @@ const Home = () => {
         { withCredentials: true }
       );
       if (response.data.success) {
-        setTodos(response.data.user.todo_list);
+        const updatedTodos = response.data.user.todo_list.map((todo) => (
+const currentDateTime = new Date();
+const dueDateTime = new Date(`$(todo.dueDate)T$(todo.dueTime)`);
+if (currentDateTime > dueDateTime && todo.status === "pending") (
+todo.status = "delayed";
+ 
+}
+return todo;
+});
+setTodos(updatedTodos);
     }
   };
 
