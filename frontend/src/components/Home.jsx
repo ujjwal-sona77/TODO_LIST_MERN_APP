@@ -50,9 +50,7 @@ const Home = () => {
         { withCredentials: true }
       );
       if (response.data.success) {
-        const updatedTodos = response.data.user.todo_list.map((todo) => {
-        setTodos(updatedTodos);
-      }
+        setTodo(response.data.user.todo_list);
     }
   };
 
