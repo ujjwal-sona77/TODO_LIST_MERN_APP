@@ -50,7 +50,7 @@ const Home = () => {
         { withCredentials: true }
       );
       if (response.data.success) {
-        setTodo(response.data.user.todo_list);
+        setTodos(response.data.user.todo_list);
     }
   };
 
